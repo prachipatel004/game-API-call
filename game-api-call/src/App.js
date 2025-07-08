@@ -1,24 +1,59 @@
-import logo from './logo.svg';
+// App.js
 import './App.css';
+import GameList from './Components/GameList';
+import Login from './Components/Login';
+import CityList from './Components/CityList';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import PrivateRoute from './Components/PrivateRoute';
+import PublicRoute from './Components/PublicRoute';
+import VenueList from './Components/VenueList';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/gamelist"
+          element={
+            <PrivateRoute>
+              <GameList />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/citylist"
+          element={
+            <PrivateRoute>
+              <CityList />
+            </PrivateRoute>
+          }
+        />
+           <Route
+          path="/venuelist"
+          element={
+            <PrivateRoute>
+              <VenueList />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
+    </Router>
   );
 }
 
