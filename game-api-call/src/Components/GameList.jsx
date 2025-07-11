@@ -20,7 +20,7 @@ const GameList = () => {
         dispatch(fetchGames());
     }, [dispatch]);
 
-    const onFinish = async (values) => {
+    const onFinish = async (values) => { 
         try {
             if (editingGame) {
                 await dispatch(editGame({ ...editingGame, ...values })).unwrap();

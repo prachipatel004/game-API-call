@@ -37,8 +37,8 @@ export const addGame = createAsyncThunk('games/add', async (newGame, { rejectWit
             { headers: getAuthHeaders() });
         return res.data.data,
         {
-            name: newGame.name,
-            photo: newGame.photo,
+            name:newGame.name,
+            photo:newGame.photo,
         };
 
     } catch (err) {

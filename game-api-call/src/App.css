@@ -8,4 +8,15 @@
 }
 .ant-table-wrapper .ant-table-pagination.ant-pagination{
   display: none;
+}  
+.ant-spin-nested-loading {
+  padding: 20px ;
+}
+.ant-col-18 {
+ display: flex;
+ gap: 20px;
+}
+.slot_flex{
+  display: flex;
+  gap: 40px;
 }

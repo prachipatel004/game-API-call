@@ -7,6 +7,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import PrivateRoute from './Components/PrivateRoute';
 import PublicRoute from './Components/PublicRoute';
 import VenueList from './Components/VenueList';
+import AddVenueForm from './Components/AddVenueList';
+
 
 function App() {
   return (
@@ -49,6 +51,14 @@ function App() {
           element={
             <PrivateRoute>
               <VenueList />
+            </PrivateRoute>
+          }
+        />
+          <Route
+          path="/addvenue"
+          element={
+            <PrivateRoute>
+              <AddVenueForm/>
             </PrivateRoute>
           }
         />
