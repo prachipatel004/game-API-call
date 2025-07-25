@@ -38,11 +38,15 @@ const Login = () => {
             const res = response.data;
             if (res?.status) {
                 localStorage.setItem('auth', JSON.stringify(res.data));
+
+                localStorage.setItem('token', res.data.accessToken);
+
                 dispatch(loginSuccess(res.data));
                 dispatch(fetchGames());
                 toast.success('Login successful!');
                 navigate('/gamelist');
-            } else {
+            }
+            else {
                 toast.error(res.message || 'Invalid email or password');
             }
         } catch (error) {

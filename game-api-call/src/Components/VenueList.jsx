@@ -64,9 +64,9 @@ const VenueList = () => {
         { page: '1', per_page: '100', search: '' },
         { headers }
       );
-      
+
       if (res.data.code === '1') {
-        setGameOptions(res.data.data.result || []); 
+        setGameOptions(res.data.data.result || []);
       }
     } catch (error) {
       message.error('Failed to load game options');
@@ -106,7 +106,7 @@ const VenueList = () => {
 
   useEffect(() => {
     fetchVenues();
-    loadGames(); 
+    loadGames();
   }, []);
 
   useEffect(() => {
@@ -219,7 +219,9 @@ const VenueList = () => {
   return (
     <>
       <h1 style={{ textAlign: 'center' }}>Venue Listing</h1>
-
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 24 }}>
+        <Button onClick={() => navigate('/bannerlist')} style={{ border: '1px solid grey', backgroundColor: 'black', color: 'white' }}>Go to banner List</Button>
+      </div>
       <div style={{ textAlign: 'center', margin: '20px 0' }}>
         <Button
           type="primary"

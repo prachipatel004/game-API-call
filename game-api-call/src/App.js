@@ -8,6 +8,8 @@ import PrivateRoute from './Components/PrivateRoute';
 import PublicRoute from './Components/PublicRoute';
 import VenueList from './Components/VenueList';
 import AddVenueForm from './Components/AddVenueList';
+import BannerList from './Components/BannerList';
+
 
 
 function App() {
@@ -59,6 +61,14 @@ function App() {
           element={
             <PrivateRoute>
               <AddVenueForm/>
+            </PrivateRoute>
+          }
+        />
+           <Route
+          path="/bannerlist"
+          element={
+            <PrivateRoute>
+              <BannerList/>
             </PrivateRoute>
           }
         />
