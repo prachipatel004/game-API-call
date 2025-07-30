@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate} from 'react-router-dom';
+import axiosInstance from '../Utils/AxioxInstamce';
 import {
   Table,
   Image,
@@ -20,6 +22,7 @@ import useBannerStore from '../Store/BannerStore';
 const { RangePicker } = DatePicker;
 
 const BannerList = () => {
+    const navigate = useNavigate();
   const banners = useBannerStore((state) => state.banners);
   const setBanners = useBannerStore((state) => state.setBanners);
   const [form] = Form.useForm();
@@ -64,7 +67,7 @@ const BannerList = () => {
       : 'http://sportapi.tracewavetransparency.com/api/v1/admin/common/add_banner';
 
     try {
-      await axios.post(url, payload, {
+      await axiosInstance.post(url, payload, {
         headers: {
           'api-key': 'game@tracewave',
           platform: 'AnDroId@Trace',
@@ -209,6 +212,9 @@ const BannerList = () => {
           </Form.Item>
         </Form>
       </Modal>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 24 }}>
+        <Button onClick={() => navigate('/userlist')} style={{ border: '1px solid grey', backgroundColor: 'black', color: 'white' }}>Go to user List</Button>
+      </div>
     </div>
   );
 };

@@ -9,6 +9,9 @@ import PublicRoute from './Components/PublicRoute';
 import VenueList from './Components/VenueList';
 import AddVenueForm from './Components/AddVenueList';
 import BannerList from './Components/BannerList';
+import UserList from './Components/UserListing';
+import ContactUsList from './Components/ContactUsList';
+import FaqList from './Components/FaqList';
 
 
 
@@ -69,6 +72,30 @@ function App() {
           element={
             <PrivateRoute>
               <BannerList/>
+            </PrivateRoute>
+          }
+        />
+             <Route
+          path="/userlist"
+          element={
+            <PrivateRoute>
+              <UserList />
+            </PrivateRoute>
+          }
+        />
+              <Route
+          path="/contactlist"
+          element={
+            <PrivateRoute>
+              <ContactUsList />
+            </PrivateRoute>
+          }
+        />
+                <Route
+          path="/faqlist"
+          element={
+            <PrivateRoute>
+              <FaqList/>
             </PrivateRoute>
           }
         />

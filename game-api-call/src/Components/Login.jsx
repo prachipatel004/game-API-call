@@ -1,53 +1,47 @@
 import React, { useEffect } from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
-import axios from 'axios';
 import { fetchGames } from './GameSlice';
 import { toast, ToastContainer } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess } from './AuthSlice';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../Utils/AxioxInstamce';
 
 const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     const user = useSelector((state) => state.auth.user);
 
-    // ✅ Redirect if already logged in
     useEffect(() => {
         const storedAuth = JSON.parse(localStorage.getItem('auth'));
         if (storedAuth?.accessToken) {
-            dispatch(loginSuccess(storedAuth)); // <-- ensures Redux is aware
+            dispatch(loginSuccess(storedAuth));
             navigate('/gamelist');
         }
     }, [dispatch, navigate]);
 
     const onFinish = async (values) => {
         try {
-            const response = await axios.post(
-                'http://sportapi.tracewavetransparency.com/api/v1/admin/auth/login',
-                values,
-                {
-                    headers: {
-                        'api-key': 'game@tracewave',
-                        'platform': 'AnDroId@Trace',
-                        'is-encript': 'false'
-                    }
-                }
-            );
-
+            const response = await axiosInstance.post('/auth/login', values);
             const res = response.data;
-            if (res?.status) {
-                localStorage.setItem('auth', JSON.stringify(res.data));
 
-                localStorage.setItem('token', res.data.accessToken);
+            if (res?.status && res?.data?.accessToken && res?.data?.refreshToken) {
+                const authData = res.data;
 
-                dispatch(loginSuccess(res.data));
+                // Save tokens to localStorage
+                localStorage.setItem('auth', JSON.stringify(authData));
+                localStorage.setItem('token', authData.accessToken);
+                localStorage.setItem('refresh_token', authData.refreshToken); // ✅ added
+
+                // Update Redux state
+                dispatch(loginSuccess(authData));
                 dispatch(fetchGames());
+
                 toast.success('Login successful!');
                 navigate('/gamelist');
-            }
-            else {
-                toast.error(res.message || 'Invalid email or password');
+            } else {
+                toast.error(res.message || 'Invalid login response');
             }
         } catch (error) {
             toast.error('Invalid email or password');
@@ -76,6 +70,7 @@ const Login = () => {
                 >
                     <Input />
                 </Form.Item>
+
                 <Form.Item
                     label="Password"
                     name="password"

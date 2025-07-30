@@ -1,7 +1,7 @@
 // citySlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-
+import axiosInstance from '../Utils/AxioxInstamce';
 const API_URL = 'http://sportapi.tracewavetransparency.com/api/v1/admin/common';
 
 const getAuthHeaders = () => {
@@ -15,7 +15,7 @@ const getAuthHeaders = () => {
 };
 export const fetchCities = createAsyncThunk('cities/fetch', async (_, { rejectWithValue }) => {
     try {
-        const res = await axios.post(`${API_URL}/city_listing`, {
+        const res = await axiosInstance.post(`${API_URL}/city_listing`, {
             page: '1',
             per_page: '100',
             search: '',
@@ -33,7 +33,7 @@ export const addCity = createAsyncThunk('cities/add', async (newCity, { rejectWi
         const payload = {
             name: newCity.name
         };
-        const res = await axios.post('http://sportapi.tracewavetransparency.com/api/v1/admin/common/add_city',
+        const res = await axiosInstance.post('http://sportapi.tracewavetransparency.com/api/v1/admin/common/add_city',
             payload,
             { headers: getAuthHeaders() });
         return res.data.data,
@@ -54,7 +54,7 @@ export const editCity = createAsyncThunk('cities/edit', async (updatedCity, { re
             city_id: updatedCity.id,
 
         };
-        const res = await axios.post('http://sportapi.tracewavetransparency.com/api/v1/admin/common/edit_city', payload,
+        const res = await axiosInstance.post('http://sportapi.tracewavetransparency.com/api/v1/admin/common/edit_city', payload,
             { headers: getAuthHeaders() });
         return res.data.data,
         {
@@ -69,7 +69,7 @@ export const editCity = createAsyncThunk('cities/edit', async (updatedCity, { re
 
 export const deleteCity = createAsyncThunk('city/delete', async (city_id, { rejectWithValue }) => {
     try {
-        await axios.post('http://sportapi.tracewavetransparency.com/api/v1/admin/common/delete_city', { city_id }, { headers: getAuthHeaders() });
+        await axiosInstance.post('http://sportapi.tracewavetransparency.com/api/v1/admin/common/delete_city', { city_id }, { headers: getAuthHeaders() });
         return city_id;
     } catch (err) {
         return rejectWithValue(err.response?.data?.message || 'Delete failed');

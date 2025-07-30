@@ -1,7 +1,7 @@
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-
+import axiosInstance from '../Utils/AxioxInstamce';
 const API_URL = 'http://sportapi.tracewavetransparency.com/api/v1/admin/game';
 
 const getAuthHeaders = () => {
@@ -17,7 +17,7 @@ const getAuthHeaders = () => {
 };
 export const fetchGames = createAsyncThunk('games/fetch', async (_, { rejectWithValue }) => {
     try {
-        const res = await axios.post('http://sportapi.tracewavetransparency.com/api/v1/admin/game/game_listing', { page: '1', per_page: '10' }, {
+        const res = await axiosInstance.post('http://sportapi.tracewavetransparency.com/api/v1/admin/game/game_listing', { page: '1', per_page: '10' }, {
             headers: getAuthHeaders(),
         });
         return res.data.data?.result || [];
@@ -32,7 +32,7 @@ export const addGame = createAsyncThunk('games/add', async (newGame, { rejectWit
             name: newGame.name,
             photo: newGame.photo,
         };
-        const res = await axios.post('http://sportapi.tracewavetransparency.com/api/v1/admin/game/add_game',
+        const res = await axiosInstance.post('http://sportapi.tracewavetransparency.com/api/v1/admin/game/add_game',
             payload,
             { headers: getAuthHeaders() });
         return res.data.data,
@@ -56,7 +56,7 @@ export const editGame = createAsyncThunk(
                 photo: updatedGame.photo,
             };
 
-            const res = await axios.post(
+            const res = await axiosInstance.post(
                 'http://sportapi.tracewavetransparency.com/api/v1/admin/game/edit_game',
                 payload,
                 { headers: getAuthHeaders() }
@@ -73,7 +73,7 @@ export const editGame = createAsyncThunk(
 );
 export const deleteGame = createAsyncThunk('games/delete', async (game_id, { rejectWithValue }) => {
     try {
-        await axios.post(`${API_URL}/delete_game`, { game_id }, { headers: getAuthHeaders() });
+        await axiosInstance.post(`${API_URL}/delete_game`, { game_id }, { headers: getAuthHeaders() });
         return game_id;
     } catch (err) {
         return rejectWithValue(err.response?.data?.message || 'Delete failed');

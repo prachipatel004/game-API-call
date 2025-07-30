@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
+import axiosInstance from '../Utils/AxioxInstamce';
 import {
   List,
   Typography,
@@ -59,7 +60,7 @@ const VenueList = () => {
   const loadGames = async () => {
     const headers = getAuthHeaders();
     try {
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         'http://sportapi.tracewavetransparency.com/api/v1/admin/game/game_listing',
         { page: '1', per_page: '100', search: '' },
         { headers }
@@ -73,7 +74,7 @@ const VenueList = () => {
     }
   };
 
-  // Fetch venue list
+ 
   const fetchVenues = async () => {
     const headers = getAuthHeaders();
     if (!headers) return;
@@ -88,7 +89,7 @@ const VenueList = () => {
     };
 
     try {
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         'http://sportapi.tracewavetransparency.com/api/v1/admin/venue/venue_listing',
         payload,
         { headers }
@@ -123,7 +124,7 @@ const VenueList = () => {
   const handleDelete = async (id) => {
     const headers = getAuthHeaders();
     try {
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         'http://sportapi.tracewavetransparency.com/api/v1/admin/venue/delete_venue',
         { venue_id: id },
         { headers }
@@ -197,7 +198,7 @@ const VenueList = () => {
         })),
       };
 
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         'http://sportapi.tracewavetransparency.com/api/v1/admin/venue/edit_venue',
         payload,
         { headers }
